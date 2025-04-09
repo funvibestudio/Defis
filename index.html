@@ -601,35 +601,6 @@ function nouveauDefi() {
     document.getElementById('btn-defi').disabled = true; // Désactive le bouton "Défi du jour"
 }
 
-// Vérifier si un défi a déjà été accepté
-function verifierDefi() {
-    const defiDuJour = localStorage.getItem('defiDuJour');
-    const defiAccepte = localStorage.getItem('defiDuJourAccepte');
-    const heureAcceptation = localStorage.getItem('heureAcceptation');
-
-    if (defiAccepte) {
-        const now = new Date().getTime();
-        const minuit = new Date(new Date().setHours(24, 0, 0, 0)).getTime();
-        
-        // Si l'heure d'acceptation est avant minuit, on garde le défi
-        if (now < minuit) {
-            document.getElementById('defi-text').innerText = defiAccepte;
-            document.getElementById('btn-accepter').disabled = true;
-            document.getElementById('btn-reussi').disabled = false;
-            document.getElementById('btn-non-reussi').disabled = false;
-        } else {
-            // Si minuit est passé, réinitialiser le défi
-            localStorage.removeItem('defiDuJourAccepte');
-            localStorage.removeItem('heureAcceptation');
-            document.getElementById('defi-text').innerText = "Clique sur 'Défi du jour' pour commencer !";
-            document.getElementById('btn-defi').disabled = false;
-        }
-    } else {
-        // Si aucun défi n'a été accepté, afficher le défi du jour
-        document.getElementById('defi-text').innerText = defiDuJour || "Clique sur 'Défi du jour' pour commencer !";
-        document.getElementById('btn-defi').disabled = false;
-    }
-}
 
 // Appel initial de la fonction pour vérifier l'état du défi
 window.onload = function() {
@@ -653,16 +624,7 @@ function accepterDefi() {
     document.getElementById('btn-reussi').disabled = false;
     document.getElementById('btn-non-reussi').disabled = false;
     
-    // Réinitialiser le défi à minuit
-    const minuit = new Date(new Date().setHours(24, 0, 0, 0)).getTime();
-    const timeUntilMidnight = minuit - Date.now();
-
-    setTimeout(() => {
-        localStorage.removeItem('defiDuJourAccepte');
-        localStorage.removeItem('heureAcceptation');
-        document.getElementById('defi-text').innerText = "Clique sur 'Défi du jour' pour commencer !";
-        document.getElementById('btn-defi').disabled = false;
-    }, timeUntilMidnight);
+ 
 }
 
 // Fonction pour mettre à jour l'historique
